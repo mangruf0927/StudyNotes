@@ -8,7 +8,7 @@ private:
     int size;
     int capacity;
 public:
-    IntArray(int init_capacity = 0);
+    IntArray(int init_capacity = 1);
     ~IntArray();
 
     IntArray(const IntArray &) = delete;

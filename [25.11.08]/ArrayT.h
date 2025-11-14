@@ -1,21 +1,21 @@
-#ifndef ARRAY_H_
-#define ARRAY_H_
+#ifndef ARRAYT_H_
+#define ARRAYT_H_
 
 #include <iostream>
 
 template <typename T>
-class Array
+class ArrayT
 {
 private:
     T * arr;
     int size;
     int capacity;
 public:
-    Array(int init_capacity = 1);
-    ~Array();
+    ArrayT(int init_capacity = 1);
+    ~ArrayT();
 
-    Array(const Array &) = delete;
-    Array & operator=(const Array &) = delete;
+    ArrayT(const ArrayT &) = delete;
+    ArrayT & operator=(const ArrayT &) = delete;
 
     void Add(const T& data);
     void Remove(const T& data);
@@ -27,7 +27,7 @@ public:
 };
 
 template <typename T>
-Array<T>::Array(int init_capacity)
+ArrayT<T>::ArrayT(int init_capacity)
 {
     if(init_capacity <= 0) init_capacity = 1;
 
@@ -37,13 +37,13 @@ Array<T>::Array(int init_capacity)
 }
 
 template <typename T>
-Array<T>::~Array()
+ArrayT<T>::~ArrayT()
 {
     delete [] arr;
 }
 
 template <typename T>
-void Array<T>::Add(const T& data)
+void ArrayT<T>::Add(const T& data)
 {
     if(capacity <= size)
     {
@@ -62,7 +62,7 @@ void Array<T>::Add(const T& data)
 }
 
 template <typename T>
-void Array<T>::Remove(const T& data)
+void ArrayT<T>::Remove(const T& data)
 {
     int idx = Find(data);
     if(idx == -1) return;
@@ -75,7 +75,7 @@ void Array<T>::Remove(const T& data)
 }
 
 template <typename T>
-void Array<T>::Insert(const T& data, const T& num)
+void ArrayT<T>::Insert(const T& data, const T& num)
 {
     int idx = Find(data);
     if(idx == -1) return;
@@ -101,7 +101,7 @@ void Array<T>::Insert(const T& data, const T& num)
 }
 
 template <typename T>
-int Array<T>::Find(const T& data) const
+int ArrayT<T>::Find(const T& data) const
 {
     for(int i = 0; i < size; i++)
     {
@@ -114,7 +114,7 @@ int Array<T>::Find(const T& data) const
 }
 
 template <typename T>
-void Array<T>::Show() const
+void ArrayT<T>::Show() const
 {
     for(int i = 0; i < size; i++)
     {

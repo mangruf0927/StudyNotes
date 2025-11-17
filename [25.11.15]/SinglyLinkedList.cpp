@@ -122,6 +122,23 @@ void SinglyLinkedList::Clear()
     size = 0;
 }
 
+void SinglyLinkedList::Reverse()
+{
+    if(head == nullptr || head == tail) return;
+
+    Node * cur = head;
+    while(cur->next != nullptr)
+    {
+        Node * temp = cur->next;
+        cur->next = temp->next;
+
+        temp->next = head;
+        head = temp;
+    }
+    tail = cur;
+}
+
+
 void SinglyLinkedList::Show() const
 {
     if(head == nullptr)

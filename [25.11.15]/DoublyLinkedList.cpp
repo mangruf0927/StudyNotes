@@ -128,6 +128,24 @@ void DoublyLinkedList::Clear()
     size = 0;
 }
 
+void DoublyLinkedList::Reverse()
+{
+    if(head == nullptr || head == tail) return;
+
+    Node * cur = head;
+    while(cur->next != nullptr)
+    {
+        Node * temp = cur->next;
+        cur->next = temp->next;
+
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+        head->prev = nullptr;
+    }
+    tail = cur;
+}
+
 void DoublyLinkedList::Show() const
 {
     if(head == nullptr) return;

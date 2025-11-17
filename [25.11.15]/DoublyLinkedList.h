@@ -26,6 +26,7 @@ public:
     void Insert(int data, int num);
     int Find(int data) const;
     void Clear();
+    void Reverse();
     void Show() const;
     void ShowReverse() const;
 

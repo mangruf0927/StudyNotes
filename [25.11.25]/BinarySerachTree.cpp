@@ -1,4 +1,5 @@
 #include "BinarySearchTree.h"
+#include <iostream>
 
 BinarySearchTree::BinarySearchTree()
 {
@@ -124,17 +125,47 @@ void BinarySearchTree::Remove(const int num)
     }
 }
 
+// 루트 -> 왼 -> 오
+void BinarySearchTree::PreOrder(Node * node) const        
+{
+    if(node == nullptr) return;
+
+    std::cout << node->data << " ";
+    PreOrder(node->left);
+    PreOrder(node->right);
+}   
+
+// 왼 -> 루트 -> 오
+void BinarySearchTree::InOrder(Node * node) const
+{
+    if(node == nullptr) return;
+
+    InOrder(node->left);
+    std::cout << node->data << " ";
+    InOrder(node->right);
+}   
+
+// 왼 -> 오 -> 루트
+void BinarySearchTree::PostOrder(Node * node) const
+{
+    if(node == nullptr) return;
+
+    PostOrder(node->left);
+    PostOrder(node->right);
+    std::cout << node->data << " ";
+}
+
 void BinarySearchTree::PreOrder() const
 {
-
+    PreOrder(root);
 }   
 
 void BinarySearchTree::InOrder() const
 {
-
+    InOrder(root);
 }   
 
 void BinarySearchTree::PostOrder() const
 {
-
+    PostOrder(root);
 }

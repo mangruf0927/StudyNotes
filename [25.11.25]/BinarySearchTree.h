@@ -13,22 +13,21 @@ class BinarySearchTree
 private:
     Node * root;
 
-    void PreOrder(Node * node) const;        // 전위 순회
-    void InOrder(Node * node) const;         // 중위 순회
-    void PostOrder(Node * node) const;       // 후위 순회
+    Node * Copy(Node * node) const;
+    void Print(Node * node) const;
+    void Clean(Node * node) const;
 public:
     BinarySearchTree();
-    BinarySearchTree(const BinarySearchTree& bsTree);
     ~BinarySearchTree();
+    
+    BinarySearchTree(const BinarySearchTree& bsTree);
+    BinarySearchTree& operator=(const BinarySearchTree & bsTree);
 
     bool Search(const int num) const;
     void Insert(const int num);
     void Remove(const int num);
 
-    void PreOrder() const; 
-    void InOrder() const;  
-    void PostOrder() const;
-
+    void Print() const;
 };
 
 #endif

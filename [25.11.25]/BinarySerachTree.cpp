@@ -8,7 +8,21 @@ BinarySearchTree::BinarySearchTree()
 
 BinarySearchTree::~BinarySearchTree()
 {
+    Clean(root);
+}
 
+BinarySearchTree::BinarySearchTree(const BinarySearchTree& bsTree)
+{
+    root = Copy(bsTree.root);
+}
+
+BinarySearchTree& BinarySearchTree::operator=(const BinarySearchTree & bsTree)
+{
+    if(this == &bsTree) return * this;
+    Clean(root);
+    
+    root = Copy(bsTree.root);
+    return * this;
 }
 
 bool BinarySearchTree::Search(const int num) const
@@ -125,47 +139,41 @@ void BinarySearchTree::Remove(const int num)
     }
 }
 
-// 루트 -> 왼 -> 오
-void BinarySearchTree::PreOrder(Node * node) const        
+// 전위 순회
+Node * BinarySearchTree::Copy(Node * node) const
 {
-    if(node == nullptr) return;
+    if(node == nullptr) return nullptr;
 
-    std::cout << node->data << " ";
-    PreOrder(node->left);
-    PreOrder(node->right);
-}   
+    Node * newNode = new Node;
+    newNode->data = node->data;
+    newNode->left = Copy(node->left);
+    newNode->right = Copy(node->right);
 
-// 왼 -> 루트 -> 오
-void BinarySearchTree::InOrder(Node * node) const
-{
-    if(node == nullptr) return;
-
-    InOrder(node->left);
-    std::cout << node->data << " ";
-    InOrder(node->right);
-}   
-
-// 왼 -> 오 -> 루트
-void BinarySearchTree::PostOrder(Node * node) const
-{
-    if(node == nullptr) return;
-
-    PostOrder(node->left);
-    PostOrder(node->right);
-    std::cout << node->data << " ";
+    return newNode;
 }
 
-void BinarySearchTree::PreOrder() const
+// 중위 순회
+void BinarySearchTree::Print(Node * node) const
 {
-    PreOrder(root);
-}   
+    if(node == nullptr) return;
 
-void BinarySearchTree::InOrder() const
-{
-    InOrder(root);
-}   
+    Print(node->left);
+    std::cout << node->data << " ";
+    Print(node->right);
+}
 
-void BinarySearchTree::PostOrder() const
+// 후위 순회
+void BinarySearchTree::Clean(Node * node) const
 {
-    PostOrder(root);
+    if(node == nullptr) return;
+
+    Clean(node->left);
+    Clean(node->right);
+    delete node;
+}
+
+void BinarySearchTree::Print() const
+{
+    Print(root);
+    std::cout << "\n";
 }

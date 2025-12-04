@@ -37,12 +37,26 @@ namespace assignment1
 
     void MyString::Append(const char * s)
     {
+        int len = 0;
+        for(int i = 0; s[i] != '\0'; i++) len++;
+        
+        char * newStr = new char[length + len + 1];
+        
+        for(int i = 0; i < length; i++) newStr[i] = str[i];
+        for(int i = 0; i < len; i++) newStr[length + i] = s[i];
+        
+        length += len;
+        newStr[length] = '\0';
 
+        delete [] str;
+        str = newStr;
     }
 
     MyString MyString::operator+(const MyString& other) const
     {
-        return MyString("temporary");
+        MyString myStr(*this);
+        myStr.Append(other.str);
+        return myStr;
     }
 
     int MyString::IndexOf(const char * s)
@@ -57,7 +71,7 @@ namespace assignment1
 
     void MyString::Interleave(const char * s)
     {
-
+       
     }
 
     bool MyString::RemoveAt(unsigned int i)

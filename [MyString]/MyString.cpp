@@ -111,11 +111,17 @@ namespace assignment1
 
     void MyString::ToLower()
     {
-
+        for(int i = 0; i < length; i++)
+        {
+            if('A' <= str[i] && str[i] <= 'Z') str[i] += 32;
+        }
     }
 
     void MyString::ToUpper()
     {
-
+        for(int i = 0; i < length; i++)
+        {
+            if('a' <= str[i] && str[i] <= 'z') str[i] -= 32;
+        }
     }
 }

@@ -61,12 +61,49 @@ namespace assignment1
 
     int MyString::IndexOf(const char * s)
     {
-        return 0;
+        int len = 0;
+        for(int i = 0; s[i] != '\0'; i++) len++;
+
+        if(len <= 0) return -1;
+
+        for(int i = 0; i <= length - len; i++)
+        {
+            bool isEqual = true;
+            for(int j = 0; j < len; j++)
+            {
+                if(str[i + j] != s[j])
+                {
+                    isEqual = false;
+                    break;
+                }
+            }
+            if(isEqual) return i;
+        }
+        return -1;
     }
 
     int MyString::LastIndexOf(const char * s)
     {
-        return 0;
+        int len = 0;
+        for(int i = 0; s[i] != '\0'; i++) len++;
+
+        if(len <= 0) return -1;
+
+        int idx = -1;
+        for(int i = 0; i <= length - len; i++)
+        {
+            bool isEqual = true;
+            for(int j = 0; j < len; j++)
+            {
+                if(str[i + j] != s[j])
+                {
+                    isEqual = false;
+                    break;
+                }
+            }
+            if(isEqual) idx = i;
+        }
+        return idx;
     }
 
     void MyString::Interleave(const char * s)
@@ -101,12 +138,23 @@ namespace assignment1
 
     void MyString::Reverse()
     {
-
+        for(int i = 0; i < length / 2; i++)
+        {
+            char temp = str[i];
+            str[i] = str[length - 1 - i];
+            str[length - 1 - i] = temp;
+        }
     }
 
     bool MyString::operator==(const MyString& rhs) const
     {
-        return false;
+        if(length != rhs.length) return false;
+
+        for(int i = 0; i < length; i++)
+        {
+            if(str[i] != rhs.str[i]) return false;
+        }
+        return true;
     }
 
     void MyString::ToLower()

@@ -45,12 +45,12 @@ namespace assignment1
         
         for(int i = 0; i < length; i++) newStr[i] = str[i];
         for(int i = 0; i < len; i++) newStr[length + i] = s[i];
+        newStr[newLen] = '\0';
         
-        length = newLen;
-        newStr[length] = '\0';
-
         delete [] str;
+
         str = newStr;
+        length = newLen;
     }
 
     MyString MyString::operator+(const MyString& other) const

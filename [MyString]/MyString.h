@@ -12,7 +12,6 @@ namespace assignment1
         MyString(const char * s);
         MyString(const MyString& other);
         ~MyString();
-
         unsigned int GetLength() const;
         const char* GetCString() const;
         void Append(const char * s);

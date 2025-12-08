@@ -152,24 +152,70 @@ namespace assignment1
         return true;
     }
     
-    void MyString::PadLeft(unsigned int totalLenth)
+    void MyString::PadLeft(unsigned int totalLength)
     {
+        if(totalLength <= length) return;
 
+        char * newStr = new char[totalLength + 1];
+        int gap = totalLength - length;
+
+        for(int i = 0; i < gap; i++) newStr[i] = ' ';
+        for(int i = gap; i < totalLength; i++) newStr[i] = str[i - gap];
+        newStr[totalLength] = '\0';
+
+        delete [] str;
+
+        str = newStr;
+        length = totalLength;
     }
 
     void MyString::PadLeft(unsigned int totalLength, const char c)
     {
+        if(totalLength <= length) return;
 
+        char * newStr = new char[totalLength + 1];
+        int gap = totalLength - length;
+
+        for(int i = 0; i < gap; i++) newStr[i] = c;
+        for(int i = gap; i < totalLength; i++) newStr[i] = str[i - gap];
+        newStr[totalLength] = '\0';
+
+        delete [] str;
+
+        str = newStr;
+        length = totalLength;
     }
 
     void MyString::PadRight(unsigned int totalLength)
     {
+        if(totalLength <= length) return;
 
+        char * newStr = new char[totalLength + 1];
+
+        for(int i = 0; i < length; i++) newStr[i] = str[i];
+        for(int i = length; i < totalLength; i++) newStr[i] = ' ';
+        newStr[totalLength] = '\0';
+
+        delete [] str;
+
+        str = newStr;
+        length = totalLength;
     }
 
     void MyString::PadRight(unsigned int totalLength, const char c)
     {
+        if(totalLength <= length) return;
 
+        char * newStr = new char[totalLength + 1];
+
+        for(int i = 0; i < length; i++) newStr[i] = str[i];
+        for(int i = length; i < totalLength; i++) newStr[i] = c;
+        newStr[totalLength] = '\0';
+
+        delete [] str;
+
+        str = newStr;
+        length = totalLength;
     }
 
     void MyString::Reverse()

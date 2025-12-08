@@ -40,12 +40,13 @@ namespace assignment1
         int len = 0;
         for(int i = 0; s[i] != '\0'; i++) len++;
         
-        char * newStr = new char[length + len + 1];
+        int newLen = length + len;
+        char * newStr = new char[newLen + 1];
         
         for(int i = 0; i < length; i++) newStr[i] = str[i];
         for(int i = 0; i < len; i++) newStr[length + i] = s[i];
         
-        length += len;
+        length = newLen;
         newStr[length] = '\0';
 
         delete [] str;
@@ -108,12 +109,47 @@ namespace assignment1
 
     void MyString::Interleave(const char * s)
     {
-       
+        int len = 0;
+        for(int i = 0; s[i] != '\0'; i++) len++;
+        
+        int newLen = length + len;
+        char * newStr = new char[newLen + 1];
+        
+        int idx = 0, i = 0, j = 0; 
+        while(idx < newLen)
+        {
+            if(i < length) newStr[idx++] = str[i++];
+            if(j < len) newStr[idx++] = s[j++];
+        }
+        newStr[newLen] = '\0';
+
+        delete [] str;
+
+        str = newStr;
+        length = newLen;
     }
 
     bool MyString::RemoveAt(unsigned int i)
     {
-        return false;
+        if(i >= length) return false;
+
+        int newLen = length - 1;
+        char * newStr = new char[newLen + 1];
+        
+        int idx = 0;
+        for(int j = 0; j < length; j++)
+        {
+            if(i == j) continue;
+            newStr[idx++] = str[j];
+        }
+        newStr[newLen] = '\0';
+
+        delete [] str;
+
+        str = newStr;
+        length = newLen;
+
+        return true;
     }
     
     void MyString::PadLeft(unsigned int totalLenth)

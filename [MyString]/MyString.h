@@ -25,8 +25,7 @@ namespace assignment1
         void PadLeft(unsigned int totalLength, const char c);
         void PadRight(unsigned int totalLength);
         void PadRight(unsigned int totalLength, const char c);
-        void Reverse();
-        
+        void Reverse();  
         bool operator==(const MyString& rhs) const;
         void ToLower();
         void ToUpper();

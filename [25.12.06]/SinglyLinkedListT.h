@@ -25,7 +25,7 @@ public:
     SinglyLinkedListT & operator=(const SinglyLinkedListT &) = delete;
 
     void Add(const T & data);
-    void Remove(const T & data);
+    bool Remove(const T & data);
     void Insert(const T & data, const T & newData);
     int Find(const T & data) const;
     void Clear();
@@ -33,6 +33,7 @@ public:
     void Show() const;
 
     int Size() const {return size;}
+    Node<T> * GetList() const {return head;}
 };
 
 template <typename T>
@@ -68,9 +69,9 @@ void SinglyLinkedListT<T>::Add(const T& data)
 }
 
 template <typename T>
-void SinglyLinkedListT<T>::Remove(const T & data)
+bool SinglyLinkedListT<T>::Remove(const T & data)
 {
-    if(head == nullptr) return;
+    if(head == nullptr) return false;
 
     // head
     if(head->data == data)
@@ -82,7 +83,7 @@ void SinglyLinkedListT<T>::Remove(const T & data)
         if(head == nullptr) tail = nullptr;
 
         size--;
-        return;
+        return true;
     }
 
     // 중간 / 마지막
@@ -93,7 +94,7 @@ void SinglyLinkedListT<T>::Remove(const T & data)
         cur = cur->next;
     }
 
-    if(cur->next == nullptr) return;
+    if(cur->next == nullptr) return false;
 
     Node<T> * target = cur->next;
     cur->next = target->next;
@@ -101,6 +102,7 @@ void SinglyLinkedListT<T>::Remove(const T & data)
 
     delete target;
     size--;
+    return true;
 }
 
 template <typename T>

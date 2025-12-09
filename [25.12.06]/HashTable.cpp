@@ -5,6 +5,7 @@ HashTable::HashTable(int initSize)
 {
     if(initSize <= 0) initSize = 1;
 
+    nums = 0;
     size = initSize;
     hash = new SinglyLinkedListT<HashData>[size];
 }
@@ -14,24 +15,55 @@ HashTable::~HashTable()
     delete [] hash;
 }
 
-int HashTable::Hash(int key)
+int HashTable::Hash(int key) const
 {
     return key % size;
 }
 
+double HashTable::LoadFactor() const
+{
+    return (double)nums / size;
+}
+
+void HashTable::Resize(int newSize)
+{
+    SinglyLinkedListT<HashData> * newHash = new SinglyLinkedListT<HashData>[newSize];
+
+    for(int i = 0; i < size; i++)
+    {
+        Node<HashData> * cur = hash[i].GetList();
+        while(cur != nullptr)
+        {
+            int newIdx = cur->data.key % newSize;
+            newHash[newIdx].Add({cur->data.key, cur->data.value});
+            cur = cur->next;
+        }
+    }
+
+    delete [] hash;
+    hash = newHash;
+    size = newSize;
+}
+
 void HashTable::Add(int key, int value)
 {
+    if(LoadFactor() >= 0.75) Resize(size * 2);
+
     int idx = Hash(key);
     hash[idx].Add({key, value});
+    nums++;
 }
 
 void HashTable::Remove(int key, int value)
 {
     int idx = Hash(key);
-    hash[idx].Remove({key, value});
+    if (!hash[idx].Remove({key, value})) return;
+    
+    nums--;
+    if(LoadFactor() < 0.25 && size > 1) Resize(size / 2);
 }
 
-bool HashTable::Find(int key, int value)
+bool HashTable::Find(int key, int value) const
 {
     int idx = Hash(key);
 
@@ -50,10 +82,11 @@ void HashTable::Show() const
     }
 }
 
-void HashTable::Clear() const
+void HashTable::Clear()
 {
     for(int i = 0; i < size; i++)
     {
         hash[i].Clear();
     }
+    nums = 0;
 }

@@ -12,7 +12,12 @@ int main()
     S.Push(30);
     S.Print();
 
-    cout << S.Top() << "\n";
+    try {
+        cout << S.Top() << "\n";
+    } catch(const out_of_range& e) 
+    {
+        cout << e.what() << "\n";
+    }
 
     S.Pop();
     S.Print();
@@ -30,7 +35,12 @@ int main()
     S.Pop();
     S.Pop();
     S.Pop();
-    cout << S.Top() << "\n";
+    try {
+        cout << S.Top() << "\n";
+    } catch(const out_of_range& e) 
+    {
+        cout << e.what() << "\n";
+    }
 
     return 0;
 }

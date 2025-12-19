@@ -2,7 +2,7 @@
 #define STACK_H_
 
 #include <iostream>
-#include <cassert>
+#include <stdexcept>
 
 template <typename T>
 class Stack
@@ -69,7 +69,8 @@ void Stack<T>::Pop()
 template <typename T>
 const T& Stack<T>::Top()
 {
-    assert(!IsEmpty());
+    if(IsEmpty()) throw std::out_of_range("스택이 비어있습니다.");
+
     return items[top - 1];
 }
 

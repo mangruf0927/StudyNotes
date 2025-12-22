@@ -1,11 +1,11 @@
-#ifndef QUEUE_H_
-#define QUEUE_H_
+#ifndef LINEARQUEUE_H_
+#define LINEARQUEUE_H_
 
 #include <stdexcept>
 #include <iostream>
 
 template <typename T>
-class Queue
+class LinearQueue
 {
 private:
     int capacity;
@@ -13,11 +13,11 @@ private:
     int rear;     
     T * items;
 public:
-    Queue(int size = 1);
-    Queue(const Queue & queue);
-    ~Queue();
+    LinearQueue(int size = 1);
+    LinearQueue(const LinearQueue & queue);
+    ~LinearQueue();
 
-    Queue<T>& operator=(const Queue& queue) = delete;
+    LinearQueue<T>& operator=(const LinearQueue& queue) = delete;
 
     void Enqueue(const T& item);
     void Dequeue();
@@ -30,9 +30,9 @@ public:
 };
 
 template <typename T>
-Queue<T>::Queue(int size)
+LinearQueue<T>::LinearQueue(int size)
 {
-    if(size <= 1) size = 1;
+    if(size <= 0) size = 1;
     capacity = size;
     front = 0;
     rear = 0;
@@ -40,7 +40,7 @@ Queue<T>::Queue(int size)
 }
 
 template <typename T>
-Queue<T>::Queue(const Queue & queue)
+LinearQueue<T>::LinearQueue(const LinearQueue & queue)
 {
     capacity = queue.capacity;
     front = 0;
@@ -51,44 +51,44 @@ Queue<T>::Queue(const Queue & queue)
 }
 
 template <typename T>
-Queue<T>::~Queue()
+LinearQueue<T>::~LinearQueue()
 {
     delete [] items;
 }
 
 template <typename T>
-void Queue<T>::Enqueue(const T& item)
+void LinearQueue<T>::Enqueue(const T& item)
 {
     if(!IsFull()) items[rear++] = item; 
 }
 
 template <typename T>
-void Queue<T>::Dequeue()
+void LinearQueue<T>::Dequeue()
 {
     if(!IsEmpty()) front++;
 }
 
 template <typename T>
-const T& Queue<T>::Peek()
+const T& LinearQueue<T>::Peek()
 {
     if(IsEmpty()) throw std::out_of_range("큐가 비어있습니다.");
     return items[front];
 }
 
 template <typename T>
-bool Queue<T>::IsEmpty() const
+bool LinearQueue<T>::IsEmpty() const
 {
     return front == rear;
 }
 
 template <typename T>
-bool Queue<T>::IsFull() const
+bool LinearQueue<T>::IsFull() const
 {
     return rear == capacity;
 }
 
 template <typename T>
-void Queue<T>::Print() const
+void LinearQueue<T>::Print() const
 {
     if(IsEmpty()) return;
     

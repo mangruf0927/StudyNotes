@@ -1,11 +1,11 @@
-#ifndef QUEUE_H_
-#define QUEUE_H_
+#ifndef CIRCULARQUEUE_H_
+#define CIRCULARQUEUE_H_
 
 #include <stdexcept>
 #include <iostream>
 
 template <typename T>
-class Queue
+class CircularQueue
 {
 private:
     int capacity;
@@ -14,11 +14,11 @@ private:
     int count;      
     T * items;
 public:
-    Queue(int size = 1);
-    Queue(const Queue & queue);
-    ~Queue();
+    CircularQueue(int size = 1);
+    CircularQueue(const CircularQueue & queue);
+    ~CircularQueue();
 
-    Queue<T>& operator=(const Queue& queue) = delete;
+    CircularQueue<T>& operator=(const CircularQueue& queue) = delete;
 
     void Enqueue(const T& item);
     void Dequeue();
@@ -31,7 +31,7 @@ public:
 };
 
 template <typename T>
-Queue<T>::Queue(int size)
+CircularQueue<T>::CircularQueue(int size)
 {
     if(size <= 0) size = 1;
     capacity = size;
@@ -42,27 +42,27 @@ Queue<T>::Queue(int size)
 }
 
 template <typename T>
-Queue<T>::Queue(const Queue & queue)
+CircularQueue<T>::CircularQueue(const CircularQueue & queue)
 {
     capacity = queue.capacity;
     front = 0;
     rear = queue.count;
     count = queue.count;
     items = new T[capacity];
-    for(int i = 0; i < count; i++)
+    for(int i = 0; i < queue.count; i++)
     {
-        items[i] = queue.items[(front + i) % capacity];
+        items[i] = queue.items[(queue.front + i) % queue.capacity];
     }
 }
 
 template <typename T>
-Queue<T>::~Queue()
+CircularQueue<T>::~CircularQueue()
 {
     delete [] items;
 }
 
 template <typename T>
-void Queue<T>::Enqueue(const T& item)
+void CircularQueue<T>::Enqueue(const T& item)
 {
     if(IsFull()) return;
 
@@ -72,7 +72,7 @@ void Queue<T>::Enqueue(const T& item)
 }
 
 template <typename T>
-void Queue<T>::Dequeue()
+void CircularQueue<T>::Dequeue()
 {
     if(IsEmpty()) return;
 
@@ -81,26 +81,26 @@ void Queue<T>::Dequeue()
 }
 
 template <typename T>
-const T& Queue<T>::Peek()
+const T& CircularQueue<T>::Peek()
 {
     if(IsEmpty()) throw std::out_of_range("큐가 비어있습니다.");
-    return items[rear];
+    return items[front];
 }
 
 template <typename T>
-bool Queue<T>::IsEmpty() const
+bool CircularQueue<T>::IsEmpty() const
 {
     return count == 0;
 }
 
 template <typename T>
-bool Queue<T>::IsFull() const
+bool CircularQueue<T>::IsFull() const
 {
     return count == capacity;
 }
 
 template <typename T>
-void Queue<T>::Print() const
+void CircularQueue<T>::Print() const
 {
     if(IsEmpty()) return;
     

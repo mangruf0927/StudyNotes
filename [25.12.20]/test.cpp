@@ -1,10 +1,10 @@
-#include "Queue.h"
+#include "CircularQueue.h"
 #include <iostream>
 using namespace std;
 
 int main()
 {
-    Queue<int> Q(5);
+    CircularQueue<int> Q(5);
     cout << Q.IsEmpty() << "\n";
     cout << Q.Size() << "\n";
     
@@ -21,7 +21,7 @@ int main()
     Q.Dequeue();
     Q.Print();
     
-    Queue<int> Q2 = Q;
+    CircularQueue<int> Q2 = Q;
     Q2.Print();
         
     Q2.Enqueue(30);

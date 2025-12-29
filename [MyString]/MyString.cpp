@@ -66,6 +66,7 @@ namespace assignment1
         for(int i = 0; s[i] != '\0'; i++) len++;
 
         if(len <= 0) return -1;
+        if(len > length) return -1;
 
         for(int i = 0; i <= length - len; i++)
         {
@@ -89,7 +90,8 @@ namespace assignment1
         for(int i = 0; s[i] != '\0'; i++) len++;
 
         if(len <= 0) return -1;
-
+        if(len > length) return -1;
+        
         int idx = -1;
         for(int i = 0; i <= length - len; i++)
         {

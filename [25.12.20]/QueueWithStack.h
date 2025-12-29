@@ -30,7 +30,7 @@ public:
 
 template <typename T>
 QueueWithStack<T>::QueueWithStack(int size)
-    : pushStack(size), popStack(size)
+    : pushStack(size <= 0 ? 1 : size), popStack(size <= 0 ? 1 : size)
 {
     if(size <= 0) size = 1;
     capacity = size;

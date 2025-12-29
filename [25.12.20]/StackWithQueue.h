@@ -14,6 +14,7 @@ private:
     int count;
     int pushIdx;
     int popIdx;
+    T top;
 public:
     StackWithQueue(int size = 1);
     StackWithQueue(const StackWithQueue& stackqueue);
@@ -23,7 +24,7 @@ public:
 
     void Push(const T& item);
     void Pop();
-    T Top();
+    const T& Top() const;
     bool IsEmpty() const;
     bool IsFull() const;
     int Size() const {return count;}
@@ -31,13 +32,15 @@ public:
 
 template <typename T>
 StackWithQueue<T>::StackWithQueue(int size) 
-    : queue{CircularQueue<T>(size <= 0 ? 1 : size), CircularQueue<T>(size <= 0 ? 1 : size)}
+    : queue{CircularQueue<T>(size <= 0 ? 1 : size), 
+            CircularQueue<T>(size <= 0 ? 1 : size)}
 {
     if(size <= 0) size = 1;
     capacity = size;
     count = 0;
     pushIdx = 0;
     popIdx = 1;
+    top = T{};
 }
 
 template <typename T>
@@ -48,6 +51,7 @@ StackWithQueue<T>::StackWithQueue(const StackWithQueue<T>& stackqueue)
     count = stackqueue.count;
     pushIdx = stackqueue.pushIdx;
     popIdx = stackqueue.popIdx;
+    top = stackqueue.top;
 }
 
 template <typename T>
@@ -61,6 +65,7 @@ void StackWithQueue<T>::Push(const T& item)
     if(IsFull()) return;
 
     queue[pushIdx].Enqueue(item);
+    top = item;
     count++;
 }
 
@@ -69,40 +74,25 @@ void StackWithQueue<T>::Pop()
 {
     if(IsEmpty()) return;
 
-    if(queue[popIdx].IsEmpty())
+    while(queue[pushIdx].Size() > 1)
     {
-        while(queue[pushIdx].Size() > 1)
-        {
-            queue[popIdx].Enqueue(queue[pushIdx].Peek());
-            queue[pushIdx].Dequeue();
-        }
-        popIdx = (popIdx + 1) % 2;
-        pushIdx = (pushIdx + 1) % 2;
+        top = queue[pushIdx].Peek();
+        queue[popIdx].Enqueue(top);
+        queue[pushIdx].Dequeue();
     }
 
-    queue[popIdx].Dequeue();
+    queue[pushIdx].Dequeue();
     count--;
+
+    int temp = pushIdx;
+    pushIdx = popIdx;
+    popIdx = temp;
 }
 
 template <typename T>
-T StackWithQueue<T>::Top()
+const T& StackWithQueue<T>::Top() const
 {
     if(IsEmpty()) throw std::out_of_range("스택이 비어있습니다");
-
-    if(queue[popIdx].IsEmpty())
-    {
-        while(queue[pushIdx].Size() > 1)
-        {
-            queue[popIdx].Enqueue(queue[pushIdx].Peek());
-            queue[pushIdx].Dequeue();
-        }
-        popIdx = (popIdx + 1) % 2;
-        pushIdx = (pushIdx + 1) % 2;
-    }
-
-    T top = queue[popIdx].Peek();
-    queue[popIdx].Dequeue();
-    queue[pushIdx].Enqueue(top);
 
     return top;
 }

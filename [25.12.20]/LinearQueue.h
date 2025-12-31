@@ -12,6 +12,8 @@ private:
     int front;
     int rear;     
     T * items;
+
+    void memMove();
 public:
     LinearQueue(int size = 1);
     LinearQueue(const LinearQueue & queue);
@@ -21,7 +23,7 @@ public:
 
     void Enqueue(const T& item);
     void Dequeue();
-    const T& Peek();
+    const T& Peek() const;
     bool IsEmpty() const;
     bool IsFull() const;
     int Size() const {return rear - front;}
@@ -32,7 +34,7 @@ public:
 template <typename T>
 LinearQueue<T>::LinearQueue(int size)
 {
-    if(size <= 0) size = 1;
+    if(size < 1) size = 1;
     capacity = size;
     front = 0;
     rear = 0;
@@ -57,9 +59,23 @@ LinearQueue<T>::~LinearQueue()
 }
 
 template <typename T>
+void LinearQueue<T>::memMove()
+{
+    int temp = front;
+    for(int i = front; i < rear; i++)
+        items[i - temp] = items[i];
+
+    rear -= temp;
+    front = 0;
+}
+
+template <typename T>
 void LinearQueue<T>::Enqueue(const T& item)
 {
-    if(!IsFull()) items[rear++] = item; 
+    if(rear == capacity && front > 0) memMove();
+    if(IsFull()) return;
+
+    items[rear++] = item; 
 }
 
 template <typename T>
@@ -69,7 +85,7 @@ void LinearQueue<T>::Dequeue()
 }
 
 template <typename T>
-const T& LinearQueue<T>::Peek()
+const T& LinearQueue<T>::Peek() const
 {
     if(IsEmpty()) throw std::out_of_range("큐가 비어있습니다.");
     return items[front];
